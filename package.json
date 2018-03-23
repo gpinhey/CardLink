@@ -1,0 +1,28 @@
+{
+  "name": "cardlink",
+  "version": "1.0.0",
+  "description": "A test package for drawing uninterrupted lines between cards",
+  "scripts": {
+    "storybook": "start-storybook -p 9001 -c .storybook",
+    "build-storybook": "build-storybook -c .storybook -o .out"
+  },
+  "author": {
+    "name": "Graham Pinhey",
+    "email": "gpinhey@uwaterloo.ca"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "react": "^16.2.0",
+    "react-dnd": "^2.6.0",
+    "react-dnd-html5-backend": "^2.6.0",
+    "react-dom": "^16.2.0"
+  },
+  "devDependencies": {
+    "@storybook/react": "^3.3.15",
+    "babel-core": "^6.26.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gpinhey/CardLink.git"
+  }
+}

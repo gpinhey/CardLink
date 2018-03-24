@@ -64,17 +64,17 @@ const mapStateToProps = state => {
   }
 }
 
-function moveCard(x,y) {
+function moveCard(id,x,y) {
   return ({type:"MOVE_CARD",
-            id: "A",
+            id: id,
             x: x,
             y: y});
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    onCellClick: (x,y) => {
-      dispatch(moveCard(x,y));
+    onCellClick: (id,x,y) => {
+      dispatch(moveCard(id,x,y));
     }
   }
 }

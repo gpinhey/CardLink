@@ -1,14 +1,29 @@
 ﻿import React from 'react';
 import PropTypes from 'prop-types';
+import {DropTarget} from 'react-dnd';
+
+const cellTarget = {
+  drop(props, monitor) {
+    props.onCellClick(monitor.getItem().id, props.x, props.y);
+  }
+}
+
+function collect(connect, monitor) {
+  return {
+    connectDropTarget: connect.dropTarget(),
+    isOver: monitor.isOver()
+  };
+}
 
 class GridCell extends React.Component {
   render() {
-    const {onCellClick, x, y} = this.props;
-    return (
+    const {onCellClick, x, y, connectDropTarget, isOver} = this.props;
+    return connectDropTarget(
       <div style={{ width: '12%',
                     height: '12%',
-                    border: '1px dotted blue' }}
-          onClick={() => onCellClick(x,y)}>
+                    border: '1px dotted blue',
+                    backgroundColor: isOver ? 'red' : ''}}
+          onClick={() => onCellClick('A',x,y)}>
         {this.props.children}&nbsp;
       </div>
     );
@@ -18,7 +33,9 @@ class GridCell extends React.Component {
 GridCell.propTypes = {
   x: PropTypes.number.isRequired,
   y: PropTypes.number.isRequired,
-  onCellClick: PropTypes.func.isRequired
+  onCellClick: PropTypes.func.isRequired,
+  connectDropTarget: PropTypes.func.isRequired,
+  isOver: PropTypes.bool.isRequired
 }
 
-export default GridCell;
+export default DropTarget("Card", cellTarget, collect)(GridCell);

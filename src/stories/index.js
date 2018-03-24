@@ -8,12 +8,16 @@ import CardCanvas from '../components/CardCanvas';
 import CardGrid from '../components/CardGrid';
 import Card from '../components/Card';
 
-let store = createStore(reducer)//, {cards: [{id: 'A', x:2, y:1}]});
+let store = createStore(reducer);
 
 store.dispatch({type:"ADD_CARD",
             id: "A",
             x: 1,
             y: 2});
+store.dispatch({type:"ADD_CARD",
+            id: "B",
+            x: 2,
+            y: 1});
 
 storiesOf('CardCanvas', module)
   .add('example', () => (

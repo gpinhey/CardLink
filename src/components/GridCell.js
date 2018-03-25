@@ -17,12 +17,12 @@ function collect(connect, monitor) {
 
 class GridCell extends React.Component {
   render() {
-    const {onCellClick, x, y, connectDropTarget, isOver} = this.props;
+    const {onCellClick, x, y, connectDropTarget, onPath} = this.props;
     return connectDropTarget(
-      <div style={{ width: '12%',
-                    height: '12%',
+      <div style={{ width: '1.85%',
+                    height: '2%',
                     border: '1px dotted blue',
-                    backgroundColor: isOver ? 'red' : ''}}
+                    backgroundColor: onPath ? 'red' : ''}}
           onClick={() => onCellClick('A',x,y)}>
         {this.props.children}&nbsp;
       </div>
@@ -34,6 +34,7 @@ GridCell.propTypes = {
   x: PropTypes.number.isRequired,
   y: PropTypes.number.isRequired,
   onCellClick: PropTypes.func.isRequired,
+  onPath: PropTypes.bool.isRequired,
   connectDropTarget: PropTypes.func.isRequired,
   isOver: PropTypes.bool.isRequired
 }

@@ -5,8 +5,10 @@ import HTML5Backend from 'react-dnd-html5-backend';
 import Card from './Card.js'
 import GridCell from './GridCell.js'
 import { connect } from 'react-redux';
+import {AStar, gridToGraph, euclidean} from '../AStar';
 
-const GRID_SIZE = 8;
+const GRID_SIZE = 50;
+const GRID_GRAPH = gridToGraph(GRID_SIZE, GRID_SIZE);
 
 class CardGrid extends React.Component {
   getCard(x,y) {
@@ -19,19 +21,29 @@ class CardGrid extends React.Component {
     }
   }
 
-  renderCell(x,y) {
+  calcPath(a,b) {
+    const { cards } = this.props;
+    const cardA = cards.find(card => card.id === a);
+    const cardB = cards.find(card => card.id === b);
+    return AStar(GRID_GRAPH, cardA, cardB, euclidean);
+  }
+
+  renderCell(x,y,path) {
+    const onPath = path.find(p=> p.x === x && p.y === y);
     return (
-      <GridCell x={x} y={y} onCellClick={this.props.onCellClick}>
+      <GridCell key={x*GRID_SIZE+y} x={x} y={y} onPath={onPath ? true : false}
+                onCellClick={this.props.onCellClick}>
         {this.getCard(x,y)}
       </GridCell>
     );
   }
 
   render() {
+    const path = this.calcPath("A","B");
     const cells = [];
     for (let y = 0; y < GRID_SIZE; y++) {
       for (let x = 0; x < GRID_SIZE; x++) {
-        cells.push(this.renderCell(x,y));
+        cells.push(this.renderCell(x,y,path));
       }
     }
     return (
@@ -80,4 +92,3 @@ const mapDispatchToProps = dispatch => {
 }
 
 export default DragDropContext(HTML5Backend)(connect(mapStateToProps, mapDispatchToProps)(CardGrid));
-//export default connect(mapStateToProps, mapDispatchToProps)(CardGrid);

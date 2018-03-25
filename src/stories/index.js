@@ -7,17 +7,23 @@ import reducer from '../reducers';
 import CardCanvas from '../components/CardCanvas';
 import CardGrid from '../components/CardGrid';
 import Card from '../components/Card';
+import {AStar, gridToGraph, euclidean} from '../AStar';
 
 let store = createStore(reducer);
 
 store.dispatch({type:"ADD_CARD",
-            id: "A",
-            x: 1,
-            y: 2});
+  id: "A",
+  x: 1,
+  y: 2});
 store.dispatch({type:"ADD_CARD",
-            id: "B",
-            x: 2,
-            y: 1});
+  id: "B",
+  x: 2,
+  y: 1});
+
+const path = AStar(gridToGraph(8,8),
+                   {x:0,y:0},
+                   {x:7,y:3},
+                   euclidean);
 
 storiesOf('CardCanvas', module)
   .add('example', () => (
@@ -36,4 +42,7 @@ storiesOf('CardCanvas', module)
   ))
   .add('store', () => (
     <div>{JSON.stringify(store.getState())}</div>
+  ))
+  .add('Astar', () => (
+    <div>{JSON.stringify(path)}</div>
   ))

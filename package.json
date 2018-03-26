@@ -4,7 +4,7 @@
   "description": "A test package for drawing uninterrupted lines between cards",
   "scripts": {
     "storybook": "start-storybook -p 9001 -c .storybook",
-    "build-storybook": "build-storybook -c .storybook -o .out"
+    "build-storybook": "build-storybook -c .storybook -o docs"
   },
   "author": {
     "name": "Graham Pinhey",

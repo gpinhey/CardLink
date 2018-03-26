@@ -1,6 +1,6 @@
 ﻿import PriorityQueue from 'js-priority-queue';
 
-export function AStar(graph, start, end, heuristic) {
+export function AStar(graph, start, end, heuristic, blocks) {
   const search = new PriorityQueue({
     comparator: (a, b) => {
       return (a.len + heuristic(a, end)) - (b.len + heuristic (b, end))
@@ -8,11 +8,14 @@ export function AStar(graph, start, end, heuristic) {
     initialValues: [{len: 0, x: start.x, y: start.y}]
   });
 
-  const isEnd = (node) => (node.x === end.x && node.y === end.y);
+  const nodeEq = (n1,n2) => (n1.x === n2.x && n1.y === n2.y);
+  const isEnd = (node) => nodeEq(node,end);
+  const isBlock = (node) => blocks.find(n => nodeEq(n,node));
 
   while(!isEnd(search.peek())) {
     const next = search.dequeue();
-    graph[next.x][next.y].map(node => {
+    graph[next.x][next.y].filter(n=>!isBlock(n))
+      .map(node => {
       search.queue({len: next.len + 1,
       x: node.x, y: node.y, prev: next});
     });

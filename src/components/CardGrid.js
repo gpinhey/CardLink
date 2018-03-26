@@ -25,7 +25,8 @@ class CardGrid extends React.Component {
     const { cards } = this.props;
     const cardA = cards.find(card => card.id === a);
     const cardB = cards.find(card => card.id === b);
-    return AStar(GRID_GRAPH, cardA, cardB, euclidean);
+    const blocks = cards.filter(card => !(card.id === a || card.id === b));
+    return AStar(GRID_GRAPH, cardA, cardB, euclidean, blocks);
   }
 
   renderCell(x,y,path) {

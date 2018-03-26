@@ -13,17 +13,22 @@ let store = createStore(reducer);
 
 store.dispatch({type:"ADD_CARD",
   id: "A",
-  x: 1,
-  y: 2});
+  x: 0,
+  y: 0});
 store.dispatch({type:"ADD_CARD",
   id: "B",
   x: 2,
+  y: 2});
+store.dispatch({type:"ADD_CARD",
+  id: "C",
+  x: 1,
   y: 1});
 
 const path = AStar(gridToGraph(8,8),
                    {x:0,y:0},
-                   {x:7,y:3},
-                   euclidean);
+                   {x:7,y:7},
+                   euclidean,
+                   [{x:4,y:4}]);
 
 storiesOf('CardCanvas', module)
   .add('example', () => (

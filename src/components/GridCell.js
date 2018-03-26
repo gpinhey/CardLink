@@ -22,9 +22,8 @@ class GridCell extends React.Component {
       <div style={{ width: '2%',
                     height: '2%',
                     border: '1px dotted blue',
-                    'box-sizing': 'border-box',
-                    backgroundColor: onPath ? 'red' : ''}}
-          onClick={() => onCellClick('A',x,y)}>
+                    boxSizing: 'border-box',
+                    backgroundColor: onPath ? 'red' : ''}}>
         {this.props.children}&nbsp;
       </div>
     );

@@ -16,7 +16,7 @@ export function AStar(graph, start, end, heuristic, blocks) {
     const next = search.dequeue();
     graph[next.x][next.y].filter(n=>!isBlock(n))
       .map(node => {
-      search.queue({len: next.len + 1,
+      search.queue({len: next.len + node.cost,
       x: node.x, y: node.y, prev: next});
     });
   }
@@ -31,14 +31,14 @@ export function gridToGraph(xMax,yMax) {
     graph[x] = [];
     for (let y = 0; y < yMax; y++) {
       graph[x][y] = [];
-      if (x > 0) graph[x][y].push({x:x-1,y});
-      if (y > 0) graph[x][y].push({x,y:y-1});
-      if (x < xMax-1) graph[x][y].push({x:x+1,y});
-      if (y < yMax-1) graph[x][y].push({x,y:y+1});
-      if (x > 0 && y > 0) graph[x][y].push({x:x-1,y:y-1});
-      if (x < xMax-1 && y > 0) graph[x][y].push({x:x+1,y:y-1});
-      if (x > 0 && y < yMax-1) graph[x][y].push({x:x-1,y:y+1});
-      if (x < xMax-1 && y < yMax-1) graph[x][y].push({x:x+1,y:y+1});
+      if (x > 0) graph[x][y].push({x:x-1,y,cost:2});
+      if (y > 0) graph[x][y].push({x,y:y-1,cost:2});
+      if (x < xMax-1) graph[x][y].push({x:x+1,y,cost:2});
+      if (y < yMax-1) graph[x][y].push({x,y:y+1,cost:2});
+      if (x > 0 && y > 0) graph[x][y].push({x:x-1,y:y-1,cost:3});
+      if (x < xMax-1 && y > 0) graph[x][y].push({x:x+1,y:y-1,cost:3});
+      if (x > 0 && y < yMax-1) graph[x][y].push({x:x-1,y:y+1,cost:3});
+      if (x < xMax-1 && y < yMax-1) graph[x][y].push({x:x+1,y:y+1,cost:3});
     }
   }
   return graph;

@@ -19,9 +19,10 @@ class GridCell extends React.Component {
   render() {
     const {onCellClick, x, y, connectDropTarget, onPath} = this.props;
     return connectDropTarget(
-      <div style={{ width: '1.85%',
+      <div style={{ width: '2%',
                     height: '2%',
                     border: '1px dotted blue',
+                    'box-sizing': 'border-box',
                     backgroundColor: onPath ? 'red' : ''}}
           onClick={() => onCellClick('A',x,y)}>
         {this.props.children}&nbsp;

@@ -12,8 +12,8 @@ const GRID_GRAPH = gridToGraph(GRID_SIZE, GRID_SIZE);
 
 class CardGrid extends React.Component {
   getCard(x,y) {
-    const card = this.props.cards.find(c => Number(c.x) === x
-                                         && Number(c.y) === y);
+    const card = this.props.cards.find(c => c.x === x
+                                         && c.y === y);
     if (card) {
       return (
         <Card label={card.id} />

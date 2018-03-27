@@ -4,7 +4,7 @@ import {DropTarget} from 'react-dnd';
 
 const cellTarget = {
   drop(props, monitor) {
-    props.onCellClick(monitor.getItem().id, props.x, props.y);
+    props.onCellDrop(monitor.getItem().id, props.x, props.y);
   }
 }
 
@@ -17,7 +17,7 @@ function collect(connect, monitor) {
 
 class GridCell extends React.Component {
   render() {
-    const {onCellClick, x, y, connectDropTarget, onPath} = this.props;
+    const {x, y, connectDropTarget, onPath} = this.props;
     return connectDropTarget(
       <div style={{ width: '2%',
                     height: '2%',
@@ -33,7 +33,7 @@ class GridCell extends React.Component {
 GridCell.propTypes = {
   x: PropTypes.number.isRequired,
   y: PropTypes.number.isRequired,
-  onCellClick: PropTypes.func.isRequired,
+  onCellDrop: PropTypes.func.isRequired,
   onPath: PropTypes.bool.isRequired,
   connectDropTarget: PropTypes.func.isRequired,
   isOver: PropTypes.bool.isRequired

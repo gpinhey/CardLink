@@ -33,7 +33,7 @@ class CardGrid extends React.Component {
     const onPath = path.find(p=> p.x === x && p.y === y);
     return (
       <GridCell key={x*GRID_SIZE+y} x={x} y={y} onPath={onPath ? true : false}
-                onCellClick={this.props.onCellClick}>
+                onCellDrop={this.props.moveCard}>
         {this.getCard(x,y)}
       </GridCell>
     );
@@ -68,7 +68,7 @@ CardGrid.propTypes = {
       y: PropTypes.number.isRequired
     }).isRequired
   ).isRequired,
-  onCellClick: PropTypes.func.isRequired
+  moveCard: PropTypes.func.isRequired
 }
 
 const mapStateToProps = state => {
@@ -86,7 +86,7 @@ function moveCard(id,x,y) {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onCellClick: (id,x,y) => {
+    moveCard: (id,x,y) => {
       dispatch(moveCard(id,x,y));
     }
   }

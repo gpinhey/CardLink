@@ -12,6 +12,30 @@ export const Direction = {
   CENTER: "C"
 }
 
+Direction.opposite = (direction) => {
+    switch(direction) {
+      case Direction.TOP:
+      return Direction.BOTTOM;
+      case Direction.TOPRIGHT:
+      return Direction.BOTTOMLEFT;
+      case Direction.RIGHT:
+      return Direction.LEFT;
+      case Direction.BOTTOMRIGHT:
+      return Direction.TOPLEFT;
+      case Direction.BOTTOM:
+      return Direction.TOP;
+      case Direction.BOTTOMLEFT:
+      return Direction.TOPRIGHT;
+      case Direction.LEFT:
+      return Direction.RIGHT;
+      case Direction.TOPLEFT:
+      return Direction.BOTTOMRIGHT;
+      case Direction.CENTER:
+      default:
+      return Direction.CENTER;
+    }
+};
+
 export function AStar(graph, start, end, heuristic, blocks) {
   const search = new PriorityQueue({
     comparator: (a, b) => {

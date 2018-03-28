@@ -18,7 +18,7 @@ function collect(connect, monitor) {
 
 class GridCell extends React.Component {
   render() {
-    const {x, y, connectDropTarget, onPath} = this.props;
+    const {x, y, connectDropTarget, onPath, fromDir, toDir} = this.props;
     return connectDropTarget(
       <div style={{ width: '2%',
                     height: '2%',
@@ -27,7 +27,8 @@ class GridCell extends React.Component {
                     position: 'relative',
                     margin: 0,
                     padding: 0}}>
-        <CardCanvas width='100%' height='100%' onPath={onPath}/>
+        <CardCanvas width='100%' height='100%' onPath={onPath}
+                    fromDir={fromDir} toDir={toDir}/>
         {this.props.children}
       </div>
     );
@@ -39,6 +40,8 @@ GridCell.propTypes = {
   y: PropTypes.number.isRequired,
   onCellDrop: PropTypes.func.isRequired,
   onPath: PropTypes.bool.isRequired,
+  fromDir: PropTypes.string.isRequired,
+  toDir: PropTypes.string.isRequired,
   connectDropTarget: PropTypes.func.isRequired,
   isOver: PropTypes.bool.isRequired
 }

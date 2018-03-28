@@ -5,7 +5,7 @@ import HTML5Backend from 'react-dnd-html5-backend';
 import Card from './Card.js'
 import GridCell from './GridCell.js'
 import { connect } from 'react-redux';
-import {AStar, gridToGraph, euclidean} from '../AStar';
+import {AStar, Direction, gridToGraph, euclidean} from '../AStar';
 
 const GRID_SIZE = 50;
 const GRID_GRAPH = gridToGraph(GRID_SIZE, GRID_SIZE);
@@ -32,9 +32,14 @@ class CardGrid extends React.Component {
   }
 
   renderCell(x,y,path) {
-    const onPath = path.find(p=> p.x === x && p.y === y) ? true : false;
+    const pathIndex = path.findIndex(p=> p.x === x && p.y === y);
+    const onPath = -1 != pathIndex ? true : false;
+    const fromDir = Direction.opposite(-1 != pathIndex ?
+                                       path[pathIndex].direction : Direction.CENTER);
+    const toDir = (pathIndex - 1) > -1 ? path[pathIndex-1].direction : Direction.CENTER;
     return (
       <GridCell key={x*GRID_SIZE+y} x={x} y={y} onPath={onPath}
+                fromDir={fromDir} toDir={toDir}
                 onCellDrop={this.props.moveCard}>
         {this.getCard(x,y)}
       </GridCell>

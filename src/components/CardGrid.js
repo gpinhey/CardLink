@@ -32,9 +32,9 @@ class CardGrid extends React.Component {
   }
 
   renderCell(x,y,path) {
-    const onPath = path.find(p=> p.x === x && p.y === y);
+    const onPath = path.find(p=> p.x === x && p.y === y) ? true : false;
     return (
-      <GridCell key={x*GRID_SIZE+y} x={x} y={y} onPath={onPath ? true : false}
+      <GridCell key={x*GRID_SIZE+y} x={x} y={y} onPath={onPath}
                 onCellDrop={this.props.moveCard}>
         {this.getCard(x,y)}
       </GridCell>

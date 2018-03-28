@@ -31,9 +31,6 @@ const path = AStar(gridToGraph(8,8),
                    [{x:4,y:4}]);
 
 storiesOf('CardCanvas', module)
-  .add('example', () => (
-    <CardCanvas width="50" height="50"/>
-  ))
   .addDecorator(story => (
     <Provider store={store}>
       {story()}
@@ -42,8 +39,8 @@ storiesOf('CardCanvas', module)
   .add('cardgrid', () => (
     <CardGrid />
   ))
-  .add('cards', () => (
-    <CardCanvas width="100%" height="100%"/>
+  .add('canvas', () => (
+    <CardCanvas width="75%" height="100%" onPath="true"/>
   ))
   .add('store', () => (
     <div>{JSON.stringify(store.getState())}</div>

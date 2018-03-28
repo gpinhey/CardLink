@@ -28,6 +28,8 @@ class Card extends React.Component {
   render() {
     const cardStyle = {
       position: "absolute",
+      top: "0px",
+      left: "0px",
       border: "2px solid black"
     };
     return this.props.connectDragSource(

@@ -1,6 +1,7 @@
 ﻿import React from 'react';
 import PropTypes from 'prop-types';
 import {DropTarget} from 'react-dnd';
+import CardCanvas from './CardCanvas';
 
 const cellTarget = {
   drop(props, monitor) {
@@ -23,8 +24,11 @@ class GridCell extends React.Component {
                     height: '2%',
                     border: '1px dotted blue',
                     boxSizing: 'border-box',
-                    backgroundColor: onPath ? 'red' : ''}}>
-        {this.props.children}&nbsp;
+                    position: 'relative',
+                    margin: 0,
+                    padding: 0}}>
+        <CardCanvas width='100%' height='100%' onPath={onPath}/>
+        {this.props.children}
       </div>
     );
   }

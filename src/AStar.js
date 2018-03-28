@@ -22,7 +22,7 @@ export function AStar(graph, start, end, heuristic, blocks) {
 
   const nodeEq = (n1,n2) => (n1.x === n2.x && n1.y === n2.y);
   const isEnd = (node) => nodeEq(node,end);
-  const isBlock = (node) => blocks.find(n=> nodeEq(n,node);
+  const isBlock = (node) => blocks.find(n=> nodeEq(n,node));
 
   const visited = [];
   try {

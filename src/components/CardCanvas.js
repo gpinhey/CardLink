@@ -12,12 +12,15 @@ class CardCanvas extends React.Component {
 
   updateCanvas() {
     const ctx = this.refs.canvas.getContext('2d');
-    ctx.width = ctx.canvas.clientWidth;
-    ctx.height = ctx.canvas.clientHeight;
     ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
     if (this.props.onPath) {
       ctx.fillStyle = "blue";
       ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+      ctx.strokeStyle = "black"
+      ctx.beginPath();
+      ctx.moveTo(0, 0);
+      ctx.lineTo(ctx.canvas.width, ctx.canvas.height);
+      ctx.stroke();
     }
   }
 
@@ -26,9 +29,13 @@ class CardCanvas extends React.Component {
       <canvas ref="canvas"
               style={{display: "absolute",
                       margin: 0,
+                      border: 0,
                       padding: 0,
+                      objectFit: "fill",
                       width: this.props.width,
                       height: this.props.height}}
+              width={100}
+              height={100}
       />
     );
   }

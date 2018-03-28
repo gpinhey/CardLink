@@ -40,7 +40,7 @@ storiesOf('CardCanvas', module)
     <CardGrid />
   ))
   .add('canvas', () => (
-    <CardCanvas width="75%" height="100%" onPath="true"/>
+    <CardCanvas width="75%" height="100%" onPath={true}/>
   ))
   .add('store', () => (
     <div>{JSON.stringify(store.getState())}</div>

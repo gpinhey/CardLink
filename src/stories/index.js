@@ -17,12 +17,12 @@ store.dispatch({type:"ADD_CARD",
   y: 0});
 store.dispatch({type:"ADD_CARD",
   id: "B",
-  x: 2,
-  y: 2});
+  x: 5,
+  y: 5});
 store.dispatch({type:"ADD_CARD",
   id: "C",
-  x: 1,
-  y: 1});
+  x: 2,
+  y: 2});
 
 const path = AStar(gridToGraph(8,8),
                    {x:0,y:0},

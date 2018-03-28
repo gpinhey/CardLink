@@ -1,44 +1,74 @@
 ﻿import PriorityQueue from 'js-priority-queue';
 
+export const Direction = {
+  TOP: "T",
+  TOPRIGHT: "TR",
+  RIGHT: "R",
+  BOTTOMRIGHT: "BR",
+  BOTTOM: "B",
+  BOTTOMLEFT: "BL",
+  LEFT: "L",
+  TOPLEFT: "TL",
+  CENTER: "C"
+}
+
 export function AStar(graph, start, end, heuristic, blocks) {
   const search = new PriorityQueue({
     comparator: (a, b) => {
       return (a.len + heuristic(a, end)) - (b.len + heuristic (b, end))
     },
-    initialValues: [{len: 0, x: start.x, y: start.y}]
+    initialValues: [{len: 0, x: start.x, y: start.y, direction: Direction.CENTER}]
   });
 
   const nodeEq = (n1,n2) => (n1.x === n2.x && n1.y === n2.y);
   const isEnd = (node) => nodeEq(node,end);
-  const isBlock = (node) => blocks.find(n => nodeEq(n,node));
+  const isBlock = (node) => blocks.find(n=> nodeEq(n,node);
 
-  while(!isEnd(search.peek())) {
-    const next = search.dequeue();
-    graph[next.x][next.y].filter(n=>!isBlock(n))
-      .map(node => {
-      search.queue({len: next.len + node.cost,
-      x: node.x, y: node.y, prev: next});
-    });
+  const visited = [];
+  try {
+    while(!isEnd(search.peek())) {
+      const next = search.dequeue();
+      if (!visited[next.x]) visited[next.x] = [];
+      graph[next.x][next.y].filter(n=>!visited[next.x][next.y] && (!isBlock(n) || isEnd(n)))
+        .map(node => {
+        search.queue({len: next.len + node.cost,
+        x: node.x, y: node.y, prev: next, direction: node.direction});
+      });
+      visited[next.x][next.y] = true;
+    }
+  } catch (e) {
+    // No valid path exists
+    return [];
   }
   const path = [search.dequeue()];
   while(path[path.length-1].prev) { path.push(path[path.length-1].prev) }
-  return path.map(node => {return {x:node.x, y:node.y}});
+  return path.map(node => {return {x:node.x, y:node.y, direction:node.direction}});
 }
 
 export function gridToGraph(xMax,yMax) {
   const graph = [];
+  const cardinalCost = 1;
+  const diagonalCost = 1.1;
   for (let x = 0; x < xMax; x++) {
     graph[x] = [];
     for (let y = 0; y < yMax; y++) {
       graph[x][y] = [];
-      if (x > 0) graph[x][y].push({x:x-1,y,cost:1});
-      if (y > 0) graph[x][y].push({x,y:y-1,cost:1});
-      if (x < xMax-1) graph[x][y].push({x:x+1,y,cost:1});
-      if (y < yMax-1) graph[x][y].push({x,y:y+1,cost:1});
-      if (x > 0 && y > 0) graph[x][y].push({x:x-1,y:y-1,cost:1.1});
-      if (x < xMax-1 && y > 0) graph[x][y].push({x:x+1,y:y-1,cost:1.1});
-      if (x > 0 && y < yMax-1) graph[x][y].push({x:x-1,y:y+1,cost:1.1});
-      if (x < xMax-1 && y < yMax-1) graph[x][y].push({x:x+1,y:y+1,cost:1.1});
+      if (x > 0)      graph[x][y].push({x:x-1,y,cost:cardinalCost,
+                                        direction:Direction.LEFT});
+      if (y > 0)      graph[x][y].push({x,y:y-1,cost:cardinalCost,
+                                        direction:Direction.TOP});
+      if (x < xMax-1) graph[x][y].push({x:x+1,y,cost:cardinalCost,
+                                        direction:Direction.RIGHT});
+      if (y < yMax-1) graph[x][y].push({x,y:y+1,cost:cardinalCost,
+                                        direction:Direction.BOTTOM});
+      if (x > 0 && y > 0)           graph[x][y].push({x:x-1,y:y-1,cost:diagonalCost,
+                                                      direction:Direction.TOPLEFT});
+      if (x < xMax-1 && y > 0)      graph[x][y].push({x:x+1,y:y-1,cost:diagonalCost,
+                                                      direction:Direction.TOPRIGHT});
+      if (x > 0 && y < yMax-1)      graph[x][y].push({x:x-1,y:y+1,cost:diagonalCost,
+                                                      direction:Direction.BOTTOMLEFT});
+      if (x < xMax-1 && y < yMax-1) graph[x][y].push({x:x+1,y:y+1,cost:diagonalCost,
+                                                      direction:Direction.BOTTOMRIGHT});
     }
   }
   return graph;

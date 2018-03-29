@@ -37,6 +37,33 @@ class CardCanvas extends React.Component {
     }
   }
 
+  pointDistanceSquared(p1,p2) {
+    const xdiff = p1[0] - p2[0];
+    const ydiff = p1[1] - p2[1];
+    return xdiff * xdiff + ydiff * ydiff;
+  }
+
+  getAnchor(startPoint, endPoint, rightMost, bottomMost) {
+    const points = [];
+    for (const dir in [Direction.TOP, Direction.TOPRIGHT,
+                       Direction.RIGHT, Direction.BOTTOMRIGHT,
+                       Direction.BOTTOM, Direction.BOTTOMLEFT,
+                       Direction.LEFT, Direction.TOPLEFT]) {
+       points.push(this.getPoint(dir, rightMost, bottomMost));
+    }
+    let max = -1;
+    let maxPoint = [];
+    for (const point of points) {
+      const startdist = this.pointDistanceSquared(startPoint, point);
+      const enddist   = this.pointDistanceSquared(endPoint, point);
+      if (startdist + enddist > max) {
+        max = startdist + enddist;
+        maxPoint = point;
+      }
+    }
+    return maxPoint;
+  }
+
   updateCanvas() {
     const ctx = this.refs.canvas.getContext('2d');
     const { width, height } = ctx.canvas;
@@ -49,7 +76,8 @@ class CardCanvas extends React.Component {
       const fromPoint = this.getPoint(fromDir, width, height);
       ctx.moveTo(fromPoint[0], fromPoint[1]);
       const toPoint = this.getPoint(toDir, width, height);
-      ctx.lineTo(toPoint[0], toPoint[1]);
+      const anchorPoint = this.getAnchor(fromPoint, toPoint, width, height);
+      ctx.quadraticCurveTo(anchorPoint[0], anchorPoint[1], toPoint[0], toPoint[1]);
       ctx.stroke();
     }
   }

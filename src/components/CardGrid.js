@@ -27,7 +27,10 @@ class CardGrid extends React.Component {
     const cardB = cards.find(card => card.id === b);
     const otherCards = cards.filter(card => !(card.id === a || card.id === b));
     let blocks = [];
-    otherCards.forEach(card => blocks = blocks.concat(GRID_GRAPH[card.x][card.y]));
+    otherCards.forEach(card => {
+      blocks.push(card);
+      blocks = blocks.concat(GRID_GRAPH[card.x][card.y]);
+    });
     return AStar(GRID_GRAPH, cardA, cardB, euclidean, blocks);
   }
 
@@ -57,7 +60,7 @@ class CardGrid extends React.Component {
     return (
       <div style={{
         width: '100%',
-        minHeight: '100%',
+        height: '100%',
         display: 'flex',
         flexWrap: 'wrap'
       }}>

@@ -57,7 +57,7 @@ class CardCanvas extends React.Component {
   render () {
     return (
       <canvas ref="canvas"
-              style={{display: "absolute",
+              style={{display: "block",
                       margin: 0,
                       border: 0,
                       padding: 0,

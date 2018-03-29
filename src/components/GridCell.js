@@ -18,14 +18,14 @@ function collect(connect, monitor) {
 
 class GridCell extends React.Component {
   render() {
-    const {x, y, connectDropTarget, onPath, fromDir, toDir} = this.props;
+    const {x, y, connectDropTarget, onPath, fromDir, toDir, isOver} = this.props;
     return connectDropTarget(
       <div style={{ width: '2%',
                     height: '2%',
-                    border: '1px dotted blue',
-                    boxSizing: 'border-box',
                     position: 'relative',
+                    backgroundColor: isOver ? 'red' : '',
                     margin: 0,
+                    border: 0,
                     padding: 0}}>
         <CardCanvas width='100%' height='100%' onPath={onPath}
                     fromDir={fromDir} toDir={toDir}/>

@@ -9,7 +9,8 @@ import CardGrid from '../components/CardGrid';
 import Card from '../components/Card';
 import {AStar, gridToGraph, euclidean} from '../AStar';
 
-let store = createStore(reducer);
+let store = createStore(reducer,
+ window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
 
 store.dispatch({type:"ADD_CARD",
   id: "A",

@@ -24,20 +24,18 @@ const propTypes = {
   connectDragSource: PropTypes.func.isRequired
 }
 
-class Card extends React.Component {
-  render() {
-    const cardStyle = {
-      position: "absolute",
-      top: "0px",
-      left: "0px",
-      border: "2px solid black"
-    };
-    return this.props.connectDragSource(
-      <div style={cardStyle}>
-        {this.props.label}
-      </div>
-    );
-  }
+function Card(props) {
+  const cardStyle = {
+    position: "absolute",
+    top: "0px",
+    left: "0px",
+    border: "2px solid black"
+  };
+  return props.connectDragSource(
+    <div style={cardStyle}>
+      {props.label}
+    </div>
+  );
 }
 
 Card.propTypes = propTypes;

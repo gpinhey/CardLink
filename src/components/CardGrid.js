@@ -6,6 +6,7 @@ import Card from './Card.js'
 import GridCell from './GridCell.js'
 import { connect } from 'react-redux';
 import {AStar, Direction, gridToGraph, euclidean} from '../AStar';
+import { moveCard } from '../actions';
 
 const GRID_SIZE = 50;
 const GRID_GRAPH = gridToGraph(GRID_SIZE, GRID_SIZE);
@@ -85,13 +86,6 @@ const mapStateToProps = state => {
   return {
     cards: state.cards
   }
-}
-
-function moveCard(id,x,y) {
-  return ({type:"MOVE_CARD",
-            id: id,
-            x: x,
-            y: y});
 }
 
 const mapDispatchToProps = dispatch => {

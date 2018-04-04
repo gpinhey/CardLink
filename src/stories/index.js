@@ -8,22 +8,14 @@ import CardCanvas from '../components/CardCanvas';
 import CardGrid from '../components/CardGrid';
 import Card from '../components/Card';
 import {AStar, gridToGraph, euclidean} from '../AStar';
+import { addCard } from '../actions';
 
 let store = createStore(reducer,
  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
 
-store.dispatch({type:"ADD_CARD",
-  id: "A",
-  x: 0,
-  y: 0});
-store.dispatch({type:"ADD_CARD",
-  id: "B",
-  x: 5,
-  y: 5});
-store.dispatch({type:"ADD_CARD",
-  id: "C",
-  x: 2,
-  y: 2});
+store.dispatch(addCard("A", 0, 0));
+store.dispatch(addCard("B", 5, 5));
+store.dispatch(addCard("C", 2, 2));
 
 const path = AStar(gridToGraph(8,8),
                    {x:0,y:0},

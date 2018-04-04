@@ -1,4 +1,5 @@
 ﻿import { combineReducers } from 'redux';
+import { ActionTypes } from './actions';
 
 function cardExists(cards, place) {
   if (cards.find(card => (card.x === place.x && card.y === place.y))) {
@@ -9,19 +10,19 @@ function cardExists(cards, place) {
 
 function cards(state=[], action) {
   switch(action.type) {
-    case "ADD_CARD":
+    case ActionTypes.addCard:
       if (cardExists(state, action)) return state;
-      const newCard = [{id: action.id,
-                        x: action.x,
-                        y: action.y}];
+      const newCard = [{id: action.payload.id,
+                        x: action.payload.x,
+                        y: action.payload.y}];
       return state.concat(newCard);
-    case "MOVE_CARD":
+    case ActionTypes.moveCard:
       if (cardExists(state, action)) return state;
       return state.map((card) => {
-        if (card.id === action.id) {
+        if (card.id === action.payload.id) {
           return Object.assign({}, card, {
-            x: action.x,
-            y: action.y})
+            x: action.payload.x,
+            y: action.payload.y})
         }
         return card;
       });
